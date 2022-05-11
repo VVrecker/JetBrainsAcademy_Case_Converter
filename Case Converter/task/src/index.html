@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Converter</title>
+</head>
+<body>
+<div class="title">Case Converter</div>
+<textarea name="" id="ta" cols="30" rows="10"></textarea>
+<button type="button" id="upper-case">Upper Case</button>
+<button type="button" id="lower-case">Lower Case</button>
+<button type="button" id="proper-case">Proper Case</button>
+<button type="button" id="sentence-case">Sentence Case</button>
+<button type="button" id="save-text-file">Save Text File</button>
+<script>
+    let ta = document.getElementById("ta");
+    let uc = document.getElementById("upper-case");
+    let lc = document.getElementById("lower-case");
+    let pc = document.getElementById("proper-case");
+    let sc = document.getElementById("sentence-case");
+    let stf = document.getElementById("save-text-file");
+
+    function download(filename, text) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    uc.addEventListener('click', function (){
+        let val = ta.value;
+        ta.value = val.toUpperCase();
+    });
+
+    lc.addEventListener('click', function (){
+        let val = ta.value;
+        ta.value = val.toLowerCase();
+    });
+
+    pc.addEventListener('click', function (){
+        let val = ta.value;
+        ta.value = val.toLowerCase().split(' ').map(function(word) {
+            return word.replace(word[0], word[0].toUpperCase());
+        }).join(' ');
+    });
+
+    sc.addEventListener('click', function (){
+        let val = ta.value;
+        ta.value = val.toLowerCase().split('. ').map(function(word) {
+            return word.replace(word[0], word[0].toUpperCase());
+        }).join('. ');
+    });
+
+    stf.addEventListener('click', function (){
+        let val = ta.value;
+        download("text.txt", val);
+    });
+</script>
+</body>
+</html>
